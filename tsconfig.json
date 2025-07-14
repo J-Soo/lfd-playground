@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "removeComments": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@game-core/*": ["./packages/game-core/src/*"],
+      "@ui-kit/*": ["./packages/ui-kit/src/*"],
+      "@supabase-client/*": ["./packages/supabase-client/src/*"],
+      "@shared-utils/*": ["./packages/shared-utils/src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "build", "coverage"]
+}
