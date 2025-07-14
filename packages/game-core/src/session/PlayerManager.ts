@@ -39,7 +39,7 @@ export class PlayerManager {
     return Array.from(this.players.values())
   }
 
-  getPlayersByRoom(roomId: string): Player[] {
+  getPlayersByRoom(_roomId: string): Player[] {
     // This would typically filter by room association
     return this.getAllPlayers()
   }
