@@ -209,17 +209,17 @@ serve(async (req) => {
 
 ```bash
 # 설치
-pnpm install
+npm install
 
 # 개발 서버
-pnpm dev                    # 전체
-pnpm dev --filter=liar-game # 특정 앱
+npm run dev                    # 전체
+npm run dev -w apps/liar-game  # 특정 앱
 
 # 빌드
-pnpm build
+npm run build
 
 # 타입 체크
-pnpm type-check
+npm run type-check
 
 # Edge Functions
 supabase functions serve [name]  # 로컬
