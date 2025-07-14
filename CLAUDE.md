@@ -59,7 +59,6 @@
 > "코드는 정원과 같다. 매일 조금씩 가꾸지 않으면 잡초가 무성해진다."
 
 ## 프로젝트 개요
-- 당신은 실력좋은 
 - **목적**: 동호회 MT용 실시간 멀티플레이어 웹 게임 플랫폼
 - **최대 동시접속**: 30명
 - **핵심 기능**: 한 사람의 액션이 모든 참가자 화면에 실시간 동기화 (카훗 스타일)
@@ -69,35 +68,49 @@
 - Backend: Supabase (Realtime + Edge Functions)
 - Styling: Tailwind CSS
 - State: Zustand
-- Build: Turborepo + pnpm
 
 ## 프로젝트 구조
 ```
 lfd-playground/
-├── apps/
-│   ├── web/                    # 메인 웹 앱
-│   ├── liar-game/             # 라이어게임 (개발자1)
-│   └── [other-game]/          # 다른 게임 (개발자2)
-├── packages/
-│   ├── game-core/             # 게임 엔진 코어
-│   ├── ui-kit/                # 공통 UI 컴포넌트
-│   ├── supabase-client/       # Supabase 래퍼
-│   └── shared-utils/          # 공통 유틸리티
-└── supabase/
-    ├── functions/             # Edge Functions
-    └── migrations/            # DB 스키마
+├── src/
+│   ├── pages/
+│   │   ├── Home.tsx           # 메인 페이지
+│   │   ├── Lobby.tsx          # 게임 대기실
+│   │   └── GameRouter.tsx     # 게임 라우팅
+│   ├── games/
+│   │   ├── liar/              # 라이어게임 (개발자1)
+│   │   │   ├── components/
+│   │   │   ├── hooks/
+│   │   │   ├── store.ts
+│   │   │   └── index.tsx
+│   │   └── [other-game]/      # 다른 게임 (개발자2)
+│   │       └── (동일 구조)
+│   ├── shared/
+│   │   ├── components/        # 공통 컴포넌트
+│   │   ├── hooks/             # 공통 훅
+│   │   ├── utils/             # 유틸리티
+│   │   └── types/             # 공통 타입
+│   ├── lib/
+│   │   └── supabase.ts        # Supabase 클라이언트
+│   └── App.tsx
+├── supabase/
+│   ├── functions/             # Edge Functions
+│   └── migrations/            # DB 스키마
+├── public/
+├── package.json
+└── vite.config.ts
 ```
 
 ## 개발 규칙
 
 ### 협업 원칙
-- 개발자1: `apps/liar-game/` 전담
-- 개발자2: `apps/[other-game]/` 전담
-- 공통 작업: `packages/` 디렉토리
+- 개발자1: `src/games/liar/` 전담
+- 개발자2: `src/games/[other-game]/` 전담
+- 공통 작업: `src/shared/` 디렉토리
 
 ### 브랜치 전략
-- main → develop → feature/[scope]-[feature]
-- scope: game-core, liar-game, ui-kit 등
+- main → develop → feature/[game]-[feature]
+- 예: feature/liar-voting, feature/shared-timer
 
 ## 필수 구현 사항
 
@@ -121,7 +134,7 @@ lfd-playground/
 
 ### Supabase 초기화
 ```typescript
-// packages/supabase-client/src/client.ts
+// src/lib/supabase.ts
 export const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
@@ -135,7 +148,7 @@ export const supabase = createClient(
 
 ### 실시간 채널 훅
 ```typescript
-// packages/game-core/src/hooks/useRealtimeChannel.ts
+// src/shared/hooks/useRealtimeChannel.ts
 export function useRealtimeChannel(roomCode: string) {
   useEffect(() => {
     const channel = supabase
@@ -151,14 +164,14 @@ export function useRealtimeChannel(roomCode: string) {
 
 ### 게임 스토어 구조
 ```typescript
-// apps/[game]/src/store/gameStore.ts
+// src/games/[game-name]/store.ts
 interface GameStore {
   gameState: GameState;
   players: Player[];
   isHost: boolean;
   
-  joinGame: (roomCode: string) => Promise;
-  performAction: (action: GameAction) => Promise;
+  joinGame: (roomCode: string) => Promise<void>;
+  performAction: (action: GameAction) => Promise<void>;
   syncState: (newState: GameState) => void;
 }
 ```
@@ -212,8 +225,7 @@ serve(async (req) => {
 npm install
 
 # 개발 서버
-npm run dev                    # 전체
-npm run dev -w apps/liar-game  # 특정 앱
+npm run dev
 
 # 빌드
 npm run build
@@ -260,7 +272,6 @@ supabase functions deploy [name] # 배포
    - React.memo로 불필요한 리렌더링 방지
    - 델타 압축으로 네트워크 사용량 최소화
    - 이미지는 WebP 포맷 사용
-   
 
 ## 배포 준비
 
@@ -281,5 +292,3 @@ supabase functions deploy [name] # 배포
 4. 호스팅
    - Vercel/Netlify 추천
    - 무료 플랜으로 충분
-
-### 이 문서는 프로젝트의 핵심 가이드입니다. 개발 중 지속적으로 참고하고 업데이트하세요.
