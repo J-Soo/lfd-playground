@@ -2,10 +2,15 @@
   "name": "lfd-playground",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "description": "Multi-game platform with realtime features",
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
+    "dev": "npm run build:packages && turbo run dev",
+    "build": "npm run build:packages && turbo run build",
+    "build:packages": "npm run build --workspace=packages/shared-utils && npm run build --workspace=packages/supabase-client && npm run build --workspace=packages/game-core && npm run build --workspace=packages/ui-kit",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
@@ -21,9 +26,7 @@
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
   },
-  "packageManager": "pnpm@8.14.0",
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "node": ">=18.0.0"
   }
 }
