@@ -39,7 +39,7 @@ export class SessionValidator {
     return { valid: true }
   }
 
-  validatePlayerAction(room: Room, playerId: string, action: string): { valid: boolean; reason?: string } {
+  validatePlayerAction(room: Room, playerId: string, _action: string): { valid: boolean; reason?: string } {
     const player = room.players.find(p => p.id === playerId)
     if (!player) {
       return { valid: false, reason: 'Player not in room' }
