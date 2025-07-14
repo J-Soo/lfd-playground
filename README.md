@@ -9,7 +9,7 @@ A real-time multiplayer game platform built with React, TypeScript, and Supabase
 - **Styling**: Tailwind CSS
 - **State Management**: Zustand
 - **Build Tool**: Turborepo
-- **Package Manager**: pnpm
+- **Package Manager**: npm
 
 ## Project Structure
 
@@ -30,7 +30,7 @@ lfd-playground/
 
 1. **Install dependencies**
    ```bash
-   pnpm install
+   npm install
    ```
 
 2. **Set up environment variables**
@@ -41,16 +41,16 @@ lfd-playground/
 
 3. **Run development servers**
    ```bash
-   pnpm dev
+   npm run dev
    ```
 
 ## Available Scripts
 
-- `pnpm dev` - Start all development servers
-- `pnpm build` - Build all packages and applications
-- `pnpm lint` - Run linting across all packages
-- `pnpm test` - Run tests
-- `pnpm clean` - Clean all build artifacts
+- `npm run dev` - Start all development servers
+- `npm run build` - Build all packages and applications
+- `npm run lint` - Run linting across all packages
+- `npm run test` - Run tests
+- `npm run clean` - Clean all build artifacts
 
 ## Development
 
