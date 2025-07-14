@@ -2,29 +2,38 @@
   "name": "lfd-playground",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "type": "module",
   "description": "Multi-game platform with realtime features",
   "scripts": {
-    "dev": "npm run build:packages && turbo run dev",
-    "build": "npm run build:packages && turbo run build",
-    "build:packages": "npm run build --workspace=packages/shared-utils && npm run build --workspace=packages/supabase-client && npm run build --workspace=packages/game-core && npm run build --workspace=packages/ui-kit",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "clean": "turbo run clean",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "clean": "rm -rf dist",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "postcss": "^8.4.33",
     "prettier": "^3.2.4",
-    "turbo": "^2.0.0",
-    "typescript": "^5.3.3"
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11"
   },
   "engines": {
     "node": ">=18.0.0",
